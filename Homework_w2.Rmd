@@ -1,0 +1,32 @@
+---
+title: "Homework2"
+author: "Luc"
+date: "Tuesday, May 24, 2016"
+output: html_document
+---
+
+Reading data
+```{r, message=FALSE}
+library(readr)
+data <- read_csv("http://www.stat.ucla.edu/projects/datasets/twins.dat")
+```
+
+Subsetting dataset
+```{r, message=FALSE}
+library(dplyr)
+data1 <- data %>% select(HRWAGEL,HRWAGEH, MALEH)
+```
+
+Creating plot
+```{r, message=FALSE}
+library(ggplot2)
+ggplot(data1, aes(x=HRWAGEL, y=HRWAGEH))+
+  geom_point()+
+  geom_smooth(method="lm", se=FALSE)+
+  xlab("Hourly wage of twin 1")+
+  ylab("Hourly wage of twin 2")+
+  ggtitle("Relationship between hourly wages of twins by gender")+
+  facet_wrap(~MALEH, labeller=as_labeller(c(`0`="Female", `1`="Male")))+
+  theme_bw()
+```
+
