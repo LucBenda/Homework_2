@@ -14,7 +14,7 @@ data <- read_csv("http://www.stat.ucla.edu/projects/datasets/twins.dat")
 Subsetting dataset
 ```{r, message=FALSE}
 library(dplyr)
-data1 <- data %>% select(HRWAGEL,HRWAGEH, MALEH)
+data1 <- data %>% select(HRWAGEL,HRWAGEH, MALEH,WHITEH)
 ```
 
 Creating plot
@@ -29,4 +29,13 @@ ggplot(data1, aes(x=HRWAGEL, y=HRWAGEH))+
   facet_wrap(~MALEH, labeller=as_labeller(c(`0`="Female", `1`="Male")))+
   theme_bw()
 ```
+
+For loop plots - just an example
+```{r, message=FALSE}
+variables = names(data1[,2:4])
+for(variable in variables){
+  print(ggplot(data1, aes_string(x=variable, y="HRWAGEL"))+geom_point())
+}
+```
+
 
